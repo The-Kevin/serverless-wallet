@@ -1,0 +1,16 @@
+# package directories
+node_modules
+
+
+
+.build
+
+build
+
+.env
+
+yarn-error.log
+
+package-lock.json
+
+junit.xml
