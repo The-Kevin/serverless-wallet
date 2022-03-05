@@ -1,37 +1,49 @@
-import mongoose from 'mongoose';
-import chalk from 'chalk';
-
-const connected = chalk.bold.cyan;
-const error = chalk.bold.red;
-const disconnected = chalk.bold.yellow;
-const termination = chalk.bold.magenta;
-
+import mongoose, { Schema } from 'mongoose';
+import { config } from 'dotenv';
+config();
 const options = {
   useCreateIndex: true,
   useNewUrlParser: true,
   useFindAndModify: false,
   useUnifiedTopology: true,
-  // ssl: true,
+};
+const { DB_URL } = process.env;
+const connections = {
+  connecton1: mongoose.createConnection(),
 };
 
-const { DB_URL } = process.env;
+const userDb =
+  process.env.NODE_ENV !== 'test'
+    ? mongoose.createConnection(process.env.USER_DB)
+    : connections.connecton1;
+
+export interface IUser {
+  _id: string;
+  email: string;
+}
+
+export const UserModel = userDb.model<IUser>(
+  'User',
+  new Schema({
+    email: String,
+  }),
+);
+
 const connect = (): void => {
   mongoose.connect(DB_URL, options);
 
   mongoose.connection.on('connected', function (): void {
-    console.log(connected('Mongoose default connection is open to', DB_URL));
+    console.log('Mongoose default connection is open to', DB_URL);
   });
   mongoose.connection.on('error', function (err): void {
-    console.log(error(`Mongoose default connection has occured ${err} error`));
+    console.log(`Mongoose default connection has occured ${err} error`);
   });
   mongoose.connection.on('disconnected', function (): void {
-    console.log(disconnected('Mongoose default connection is disconnected'));
+    console.log('Mongoose default connection is disconnected');
   });
   process.on('SIGINT', function (): void {
     mongoose.connection.close(function () {
-      console.log(
-        termination('Mongoose default connection is disconnected due to application termination'),
-      );
+      console.log('Mongoose default connection is disconnected due to application termination');
       process.exit(0);
     });
   });

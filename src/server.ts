@@ -6,6 +6,7 @@ import cors from 'cors';
 import routes from './modules/routes';
 import database from './database/mongoose';
 import morgan from 'morgan';
+import { usePassport } from './utils/passport-helper';
 
 const app = express();
 
@@ -19,7 +20,7 @@ if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
 }
 
-// usePassport();
+usePassport();
 
 app.use(cors());
 app.use(helmet());
@@ -34,7 +35,7 @@ routes.get('/', (_req, res) => {
 });
 
 if (process.env.NODE_ENV === 'local') {
-  const port = process.env.LOCAL_PORT ?? 3001;
+  const port = process.env.LOCAL_PORT ?? 3002;
   app.listen(port, () => {
     console.log('Server Local On:', port);
   });
