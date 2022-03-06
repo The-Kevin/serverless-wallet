@@ -7,27 +7,7 @@ const options = {
   useFindAndModify: false,
   useUnifiedTopology: true,
 };
-const { DB_URL } = process.env;
-const connections = {
-  connecton1: mongoose.createConnection(),
-};
-
-const userDb =
-  process.env.NODE_ENV !== 'test'
-    ? mongoose.createConnection(process.env.USER_DB)
-    : connections.connecton1;
-
-export interface IUser {
-  _id: string;
-  email: string;
-}
-
-export const UserModel = userDb.model<IUser>(
-  'User',
-  new Schema({
-    email: String,
-  }),
-);
+const { DB_URL, USER_DB } = process.env;
 
 const connect = (): void => {
   mongoose.connect(DB_URL, options);
@@ -49,4 +29,23 @@ const connect = (): void => {
   });
 };
 
+const connections = {
+  connecton1: mongoose.createConnection(),
+};
+
+const userDb =
+  process.env.NODE_ENV !== 'test' ? mongoose.createConnection(USER_DB) : connections.connecton1;
+
+export interface IUser {
+  _id: string;
+  email: string;
+}
+const UserModel = userDb.model<IUser>(
+  'User',
+  new Schema({
+    email: {},
+  }),
+);
+
+export { UserModel };
 export default connect;

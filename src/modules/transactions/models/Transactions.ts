@@ -7,6 +7,7 @@ export enum TypeTransaction {
 
 export interface Transaction extends Document {
   user_id: string;
+  receiver_id: string;
   type: string;
   amount: string;
 }
@@ -14,6 +15,11 @@ export interface Transaction extends Document {
 const transactionSchema: Schema<Transaction> = new Schema(
   {
     user_id: {
+      type: Schema.Types.ObjectId,
+      ref: UserModel,
+      required: true,
+    },
+    receiver_id: {
       type: Schema.Types.ObjectId,
       ref: UserModel,
       required: true,
