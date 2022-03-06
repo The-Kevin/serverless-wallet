@@ -1,4 +1,4 @@
-import { check, ValidationChain, query, validationResult } from 'express-validator';
+import { ValidationChain, query, check } from 'express-validator';
 import { TypeTransaction } from './models/Transactions';
 import { UserModel } from '../../database/mongoose';
 import { handlePageAndLimitQuery } from '../../utils/validationChain';
@@ -17,7 +17,6 @@ export const createTransactionValidation = (): ValidationChain[] => [
       }
       const check = await UserModel.exists({ _id: receive_id });
       if (!check) return Promise.reject();
-
       return Promise.resolve();
     })
     .withMessage({
@@ -31,14 +30,12 @@ export const createTransactionValidation = (): ValidationChain[] => [
     .isString()
     .isIn(Object.values(TypeTransaction))
     .withMessage({ id: 'invalid-type', message: 'Type query is invalid.' }),
-  ,
   check('amount')
     .exists()
     .withMessage({ id: 'required-amount', message: 'Amount of transaction is required.' })
     .bail()
     .isNumeric()
     .withMessage({ id: 'invalid-amount', message: 'Amount query is invalid.' }),
-  ,
 ];
 export const listTransactionValidation = (): ValidationChain[] => [
   ...handlePageAndLimitQuery,
