@@ -1,0 +1,17 @@
+version: '3.1'
+services:
+  mongo-wallet:
+    image: mongo
+    ports:
+      - 27017:27017
+    networks:
+      - ilia-network
+  mongo-users:
+    image: mongo
+    ports:
+      - 27018:27017
+    networks:
+      - ilia-network
+networks:
+  ilia-network:
+    driver: bridge

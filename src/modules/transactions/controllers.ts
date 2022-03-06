@@ -33,9 +33,16 @@ export const listTransaction = async (req: Request, res: Response, next: NextFun
     const page = Number(req.query.page) || 0;
     const limit = Number(req.query.limit) || 15;
 
-    const transactions = await TransactionModel.find({
+    let findOptions = {
       user_id: myUser._id,
-    })
+    };
+
+    if (req.query?.type) {
+      findOptions = Object.assign(findOptions, {
+        type: req.query.type,
+      });
+    }
+    const transactions = await TransactionModel.find(findOptions)
       .skip(page * limit)
       .limit(limit);
 
