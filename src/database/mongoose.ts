@@ -36,6 +36,10 @@ const connections = {
 const userDb =
   process.env.NODE_ENV !== 'test' ? mongoose.createConnection(USER_DB) : connections.connecton1;
 
+export interface IUser {
+  _id: string;
+  email: string;
+}
 const UserModel = userDb.model<IUser>(
   'User',
   new Schema({
