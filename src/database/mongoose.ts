@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Schema, Document } from 'mongoose';
 import { config } from 'dotenv';
 config();
 const options = {
@@ -36,7 +36,7 @@ const connections = {
 const userDb =
   process.env.NODE_ENV !== 'test' ? mongoose.createConnection(USER_DB) : connections.connecton1;
 
-export interface IUser {
+export interface IUser extends Document {
   _id: string;
   email: string;
 }

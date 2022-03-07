@@ -1,5 +1,23 @@
 version: '3.1'
 services:
+  nodejs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nodejs
+    container_name: serverless-ilia-wallet
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - DB_URL=$DB_URL
+      - JWT_SECRET=$JWT_SECRET
+      - USER_DB=$USER_DB
+    ports:
+      - 3001:3001
+    volumes:
+      - .:/usr/app
+    networks:
+      - ilia-network
   mongo-wallet:
     image: mongo
     ports:

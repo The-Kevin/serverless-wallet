@@ -1,8 +1,6 @@
 # package directories
 node_modules
 
-
-
 .build
 
 build
