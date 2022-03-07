@@ -6,7 +6,7 @@
 
 As seguintes ferramentas foram usadas na construção do projeto:
 
-- [typescript](www.typescriptlang.org/)
+- [Typescript](https://www.typescriptlang.org/)
 - [Node.js](https://nodejs.org/en/)
 - [Express](https://expressjs.com/pt-br/)
 
