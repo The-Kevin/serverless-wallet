@@ -8,6 +8,8 @@ import database from './database/mongoose';
 import morgan from 'morgan';
 import { usePassport } from './utils/passport-helper';
 
+//require because the GRCP lib dont accept import/export
+
 const grcp = require('@grpc/grpc-js');
 const proto = require('./config/grpc/connection');
 const FunctionsGRCP = require('./modules/transactions/grpc');
