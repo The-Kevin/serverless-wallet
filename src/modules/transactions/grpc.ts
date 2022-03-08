@@ -1,5 +1,4 @@
 import TransactionModel from './models/Transactions';
-import { UserModel } from '../../database/mongoose';
 
 module.exports = {
   async createTransaction(call, callback) {
@@ -12,34 +11,17 @@ module.exports = {
       amount,
     });
     await newTransaction.save();
-    const populate = await UserModel.populate(newTransaction, [
-      {
-        path: 'user_id',
-        select: '_id email first_name last_name',
-      },
-      {
-        path: 'receiver_id',
-        select: '_id email first_name last_name',
-      },
-    ]);
-
-    return callback(null, populate);
+    return callback(null, { newTransaction });
   },
   async listTransaction(call, callback) {
-    const { _id, page = 0, limit = 15 } = call.request;
+    const { _id } = call.request;
 
     const findOptions = {
       user_id: _id,
     };
 
-    const transactions = await TransactionModel.find(findOptions)
-      .skip(page * limit)
-      .limit(limit);
+    const transactions = await TransactionModel.find(findOptions);
 
-    const populate = await UserModel.populate(transactions, {
-      path: 'user_id',
-      select: '_id email first_name last_name',
-    });
-    return callback(null, populate);
+    return callback(null, { transactions });
   },
 };
