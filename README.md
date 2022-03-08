@@ -33,12 +33,10 @@ $ yarn local
 
 # O servidor inciará na porta:3001 - acesse <http://localhost:3001/>
 
-
 # Você também pode criar um container Docker para utilizar da aplicação
 $  docker-compose up
 
 # Será criada juntamente a aplicação um banco de dados MongoDb utilizando a porta 27017 por uma rede interna (ilia-network)
-
 
 ## OBS: a utilização desta API requer um usuario criado pela plataforma de usuario
 ## https://github.com/The-Kevin/microservice-users

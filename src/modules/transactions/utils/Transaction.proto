@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+message Transaction {
+    string _id = 1;
+    string user_id = 2;
+    string receiver_id = 3;
+    string type = 4;
+    int32 amount = 5;
+}
+
+message CreateTransactionRequest {
+    int32 amount = 1;
+    string receiver_id = 2;
+}
+
+message CreateTransactionResponse {
+    Transaction transaction = 1;
+}
+
+message ListTransactionRequest {
+
+}
+
+message ListTransactionResponse {
+    repeated Transaction transactions = 1;
+}
+
+
+service TransactionService {
+    rpc createTransaction(CreateTransactionRequest) returns (CreateTransactionResponse);
+    rpc listTransaction(ListTransactionRequest) returns (ListTransactionResponse);
+}
+
+
