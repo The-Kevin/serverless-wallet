@@ -6,6 +6,9 @@ message Transaction {
     string receiver_id = 3;
     string type = 4;
     int32 amount = 5;
+    string createdAt = 6;
+    string updatedAt = 7;
+    string __v = 8;
 }
 
 message CreateTransactionRequest {
@@ -19,7 +22,7 @@ message CreateTransactionResponse {
 }
 
 message ListTransactionRequest {
-
+    string _id = 1;
 }
 
 message ListTransactionResponse {
