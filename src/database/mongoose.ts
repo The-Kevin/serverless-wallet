@@ -10,7 +10,7 @@ const options = {
 const { DB_URL, USER_DB } = process.env;
 
 const connect = (): void => {
-  mongoose.connect(DB_URL, options);
+  mongoose.connect(DB_URL || 'mongodb://localhost:27017', options);
 
   mongoose.connection.on('connected', function (): void {
     console.log('Mongoose default connection is open to', DB_URL);
