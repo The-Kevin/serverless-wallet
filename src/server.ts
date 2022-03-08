@@ -8,6 +8,17 @@ import database from './database/mongoose';
 import morgan from 'morgan';
 import { usePassport } from './utils/passport-helper';
 
+const grcp = require('@grpc/grpc-js');
+const proto = require('./config/grpc/connection');
+const FunctionsGRCP = require('./modules/transactions/grpc');
+
+export const grpcServer = new grcp.Server();
+
+grpcServer.addService(proto.TransactionService, FunctionsGRCP);
+grpcServer.bindAsync('0.0.0.0:50051', grcp.ServerCredentials.createInsecure(), () => {
+  grpcServer.start();
+});
+
 const app = express();
 
 config();
